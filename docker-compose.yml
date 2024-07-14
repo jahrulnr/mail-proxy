@@ -1,0 +1,22 @@
+version: '3'
+services:
+  proxy-mail:
+    image: proxy-mail
+    container_name: proxy-mail
+    environment:
+      - SMTP_SERVER=proxy-mail-server:1025
+    networks:
+      - proxy-mail
+
+  proxy-mail-server:
+    image: dockage/mailcatcher:0.9.0
+    container_name: proxy-mail-server
+    ports:
+      - "127.0.0.1:8081:1080"
+    networks:
+      - proxy-mail
+
+networks:
+  proxy-mail:
+    external: true
+    name: proxy-mail
